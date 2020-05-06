@@ -1,0 +1,2 @@
+# MozgoParty
+React Native App
