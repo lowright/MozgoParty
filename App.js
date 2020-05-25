@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import Video from 'react-native-video';
 import { WebView } from 'react-native-webview';
+// import BottomQuestionNavigation from './app/components/BottomQuestionNavigation'
 export default class App extends Component{
 
   constructor(props) {
@@ -26,8 +27,6 @@ export default class App extends Component{
 
   render() {
 
-    const {data, index} = this.state
-
     return (
       // <Video
       //   key={index}
@@ -37,7 +36,8 @@ export default class App extends Component{
       //   onProgress={() => console.log('onProgress')}
       //   onEnd={() => this.setState({index : index + 1})}
       // />
-      <WebView source={{ uri: 'https://party-games.mozgo.com/MmlVdKQWab' }} />
+      <WebView source={{ uri: 'https://party-games.mozgo.com/YW9ozMWjl6' }} />
+     
     )
 
   }
