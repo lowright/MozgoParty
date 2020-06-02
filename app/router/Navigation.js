@@ -89,7 +89,7 @@ const Auth = createStackNavigator(
         },
     },
     RegistrationScreeen : {
-        screen : RecoverScreeen,
+        screen : RegistrationScreeen,
         navigationOptions: { 
             headerShown: true
         },
