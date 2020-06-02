@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, View, Text, TextInput } from 'react-native';
+import {StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 class SupportScreen extends React.Component {
@@ -27,6 +27,13 @@ class SupportScreen extends React.Component {
                     style={styles.dropdownWrapper}
                     dropDownStyle={styles.itemContent}
                 />
+
+                <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('SettingsScreen')}
+                    style={{marginTop : 30}}
+                >
+                    <Text>SettingsScreen</Text>
+                </TouchableOpacity>
             </View>
         )
 

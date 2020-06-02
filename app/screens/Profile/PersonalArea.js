@@ -58,6 +58,12 @@ export default class PersonalArea extends React.Component{
                     >
                         <Text style={styles.PersonalLogoutButtonText}>Выйти</Text>
                     </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate('SettingsStack')}
+                        style={styles.PersonalActionButton}
+                    >
+                        <Text style={styles.PersonalLogoutButtonText}>Настройки TEST</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         )

@@ -13,6 +13,12 @@ class SettingsScreen extends React.Component {
                 <TouchableOpacity>
                     <Text style={{fontSize : 16, fontWeight : 'bold', paddingVertical : 20}}>Политика конфиденциальности</Text>
                 </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('GamesGuideScreen')}
+                    style={{marginTop : 30}}
+                >
+                    <Text>GamesGuideScreen</Text>
+                </TouchableOpacity>
             </View>
         )
 

@@ -38,6 +38,12 @@ class GamesGuideScreen extends React.Component {
                     <Text style={{width : '92%'}}>Каждая игра имеет 3 запуска. Выход
 из приложения в момент игры считается потраченным запуском. Пауза игры без выхода из приложения не считается отдельно потраченным запуском. После третьего запуска игра становится недоступна.</Text>
                 </View>
+                <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('Profile')}
+                    style={{marginTop : 30}}
+                >
+                    <Text>Profile</Text>
+                </TouchableOpacity>
             </View>
         )
 

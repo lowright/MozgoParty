@@ -22,6 +22,11 @@ import PersonalArea from '../screens/Profile/PersonalArea'
 import {EditPersonalArea} from '../screens/Profile/EditPersonalArea'
 import {ChangePass} from '../screens/Profile/ChangePass'
 
+import FAQScreen from '../screens/Settings/FAQScreen'
+import SupportScreen from '../screens/Settings/SupportScreen'
+import SettingsScreen from '../screens/Settings/SettingsScreen'
+import GamesGuideScreen from '../screens/Settings/GamesGuideScreen';
+
 
 const ShopStack = createStackNavigator(
     {
@@ -38,6 +43,35 @@ const ShopStack = createStackNavigator(
             },
         }
     },
+)
+
+const SettingsStack = createStackNavigator(
+    {
+        FAQScreen : {
+            screen : FAQScreen, 
+            navigationOptions: { 
+                headerShown: false
+            },
+        },
+        SupportScreen : {
+            screen : SupportScreen,
+            navigationOptions: { 
+                headerShown: true
+            },
+        },
+        SettingsScreen : {
+            screen : SettingsScreen,
+            navigationOptions: { 
+                headerShown: true
+            },
+        },
+        GamesGuideScreen : {
+            screen : GamesGuideScreen,
+            navigationOptions: { 
+                headerShown: true
+            },
+        }
+    }
 )
 
 const MyGames = createStackNavigator(
@@ -129,7 +163,8 @@ export const Navigation = createAppContainer(createSwitchNavigator({
     Loading: Auth,
     Profile: Profile,
     Shop : ShopStack,
-    MyGames : MyGames
+    MyGames : MyGames,
+    SettingsStack : SettingsStack
   }, 
   {
     initialRouteName: 'Loading',

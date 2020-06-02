@@ -1,6 +1,7 @@
 import React from 'react'
 import Accordion from 'react-native-collapsible/Accordion';
 import {StyleSheet, View, Text} from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class FAQScreen extends React.Component {
 
@@ -63,6 +64,12 @@ class FAQScreen extends React.Component {
                     renderContent={this._renderContent}
                     onChange={this._updateSections}
                 />
+                <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('SupportScreen')}
+                    style={{marginTop : 30}}
+                >
+                    <Text>SupportScreen</Text>
+                </TouchableOpacity>
             </View>
         )
 
