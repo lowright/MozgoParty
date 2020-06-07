@@ -1,73 +1,110 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { CheckBox } from 'react-native-elements'
+import {connect} from 'react-redux'
+import registrationUser from '../../actions/registrationUser'
 
 
-export default class RegistrationScreeen extends Component{
+class RegistrationScreeen extends Component{
 
     constructor(props) {
         super(props)
 
         this.state = {
-            checked : false
+            checked : false,
+            name : '',
+            email : '',
+            phone : '',
+            password : '',
+            password_confirmation : ''
         }
     }
 
-  render() {
+    render() {
 
-    return (
-      
-      <View style={styeles.container}>
+        const { registrationUser } = this.props
+        const { name, email, password, password_confirmation, phone } = this.state
 
-            <View style={styeles.form}>
-                <TextInput
-                    style={styeles.inputForm}
-                    onChangeText={text => text}
-                    placeholder='Имя и фамилия'
+        return (
+        
+            <View style={styeles.container}>
+
+                <View style={styeles.form}>
+                    <TextInput
+                        style={styeles.inputForm}
+                        onChangeText={name => this.setState({name})}
+                        placeholder='Имя и фамилия'
+                        value={this.state.name}
+                    />
+                    <TextInput
+                        style={styeles.inputForm}
+                        onChangeText={email => this.setState({email})}
+                        placeholder='E-mail'
+                        value={this.state.email}
+                    />
+                    <TextInput
+                        style={styeles.inputForm}
+                        onChangeText={phone => this.setState({phone})}
+                        placeholder='Номер телефона'
+                        value={this.state.phone}
+                    />
+                    <TextInput
+                        style={styeles.inputForm}
+                        onChangeText={password => this.setState({password})}
+                        secureTextEntry={true}
+                        placeholder='Пароль' 
+                        value={this.state.password}
+                    />
+                    <TextInput
+                        style={styeles.inputForm}
+                        onChangeText={pass => this.setState({password_confirmation : pass})}
+                        secureTextEntry={true}
+                        placeholder='Подтвердить пароль'
+                        value={this.state.password_confirmation}
+                    />
+                </View>
+
+                <CheckBox
+                    title='Я соглашаюсь на обработку персональных данных и прочитал пользовательское соглашение'
+                    checked={this.state.checked}
+                    onPress={() => this.setState({checked : this.state.checked ? false : true})}
+                    style={{}}
                 />
-                <TextInput
-                    style={styeles.inputForm}
-                    onChangeText={text => text}
-                    placeholder='E-mail'
-                />
-                <TextInput
-                    style={styeles.inputForm}
-                    onChangeText={text => text}
-                    secureTextEntry={true}
-                    placeholder='Пароль' 
-                />
-                <TextInput
-                    style={styeles.inputForm}
-                    onChangeText={text => text}
-                    secureTextEntry={true}
-                    placeholder='Подтвердить пароль'
-                />
+
+                <TouchableOpacity
+                    style={styeles.btnAuth}
+                    onPress={() => registrationUser(name, email, password, password_confirmation, phone)}
+                >
+                    <Text style={{textAlign : 'center', color : '#fff', fontSize : 14}}>
+                        ЗАРЕГЕСТРИРОВАТЬСЯ
+                    </Text>
+                </TouchableOpacity>
+
             </View>
+        
+        )
 
-            <CheckBox
-                title='Я соглашаюсь на обработку персональных данных и прочитал пользовательское соглашение'
-                checked={this.state.checked}
-                onPress={() => this.setState({checked : this.state.checked ? false : true})}
-                style={{}}
-            />
-
-            <TouchableOpacity
-                style={styeles.btnAuth}
-            >
-                <Text style={{textAlign : 'center', color : '#fff', fontSize : 14}}>
-                    ЗАРЕГЕСТРИРОВАТЬСЯ
-                </Text>
-            </TouchableOpacity>
-
-
-
-      </View>
-     
-    )
-
-  }
+    }
 
 }
+
+const mapStateToProps = state => {
+    console.log('mapStateToProps >>>>>>>>')
+    console.log(JSON.stringify(state))
+    return {}
+}
+
+const mapDispatchToProps = dispatch => {
+    console.log('mapDispatchToProps >>>>>>>>')
+    return {
+        registrationUser : (name, email, password, password_confirmation, phone) => {
+            dispatch(registrationUser(name, email, password, password_confirmation, phone))
+        }
+    }
+}
+  
+export default connect( mapStateToProps, mapDispatchToProps )(RegistrationScreeen)
+  
 
 const styeles = StyleSheet.create({
     container : {

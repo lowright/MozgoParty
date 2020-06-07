@@ -1,18 +1,8 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import {Navigation} from './app/router/Navigation'
+import {Navigation} from './app/router/Navigation';
+import { Provider } from 'react-redux';
+import store from './app/store'
 
-export default class App extends Component{
+export const App = () => <Provider store={ store }><Navigation/></Provider>
 
-  render() {
-
-    return (
-      
-      <Navigation />
-     
-    )
-
-  }
-
-}
- 
+export default App
