@@ -1,8 +1,19 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux'
+import authorizationUser from '../../actions/authorizationUser'
 
 
-export default class AuthScreen extends Component{
+class AuthScreen extends Component{
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            email : '',
+            password : ''
+        }
+    }
 
   render() {
 
@@ -17,12 +28,12 @@ export default class AuthScreen extends Component{
                 <Text style={{color : '#979797', fontSize : 12, paddingLeft : 10}}>E-mail</Text>
                 <TextInput
                     style={styeles.inputForm}
-                    onChangeText={text => text}
+                    onChangeText={email => this.setState({email})}
                 />
                 <Text style={{color : '#979797', fontSize : 12, paddingLeft : 10}}>Пароль</Text>
                 <TextInput
                     style={styeles.inputForm}
-                    onChangeText={text => text}
+                    onChangeText={password => this.setState({password})}
                     secureTextEntry={true}
                 />
             </View>
@@ -69,6 +80,23 @@ export default class AuthScreen extends Component{
   }
 
 }
+
+const mapStateToProps = state => {
+    console.log('mapStateToProps >>>>>>>>')
+    console.log(JSON.stringify(state))
+    return {
+        
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        authorizationUser : (email, password) => dispatch(authorizationUser(email, password))
+    }
+}
+  
+export default connect( mapStateToProps,mapDispatchToProps )(AuthScreen)
+  
+
 
 const styeles = StyleSheet.create({
     container : {
