@@ -1,4 +1,4 @@
-import querystring from 'querystring'
+// import querystring from 'querystring'
 import fetch from 'node-fetch'
 
 export default class Api {
@@ -6,7 +6,7 @@ export default class Api {
     this.host = host
     this.paths = {
       api: {
-        login: '/api/login/',
+        login: '/api/login',
         password: {
           email: '/api/password/email',
           reset: '/api/password/reset'
@@ -19,28 +19,40 @@ export default class Api {
     const response = await fetch(`${this.host}${path}`, {
       method,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
-      body
+      body: JSON.stringify(body)
     })
 
-    if (!response.ok) {
-      throw {
-        name: `Error in request to ${path}`,
-        code: response.status,
-        message: response.statusText
-      }
+    if (response.ok) {
+      return response.json()
     }
 
     return response.json()
   }
 
-  //user authorize jump to definition
+  //description user authorize jump to definition
 
   async login({ method = 'POST', email = '', password = '' } = {}) {
     const path = this.paths.api.login
+
     return this.request({ path, method, body: { email, password } })
   }
+
+  //description user registration
+
+  async players({ method = 'POST', name = '', email = '', phone = '', password = '', password_confirmation = '' } = {}) {
+    const path = this.paths.api.login
+
+    return this.request({
+      path, method, body: {
+        name, email, phone, password, password_confirmation
+      }
+    })
+  }
+
+  //description send password reset link
 
   async email({ method = 'POST', email = '' } = {}) {
     const path = this.paths.api.password.email
@@ -48,9 +60,12 @@ export default class Api {
     return this.request({ path, method, body: { email } })
   }
 
+  //description reset user password
+
   async reset({ method = 'POST', email, token, password, passwordConfirmation } = {}) {
     const path = this.paths.api.password.reset
 
     return this.request({ path, method, body: { email, token, password, passwordConfirmation } })
   }
 }
+

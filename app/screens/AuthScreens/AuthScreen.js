@@ -17,6 +17,8 @@ class AuthScreen extends Component{
 
   render() {
 
+    const {email, password} = this.state
+
     return (
       
       <View style={styeles.container}>
@@ -39,7 +41,7 @@ class AuthScreen extends Component{
             </View>
 
             <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Profile')}
+                onPress={() =>  this.props.authorizationUser(email, password)}
                 style={styeles.btnAuth}
             >
                 <Text style={{textAlign : 'center', color : '#fff', fontSize : 14}}>

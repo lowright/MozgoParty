@@ -1,5 +1,5 @@
 import React from 'react'
-import {View} from 'react-native'
+import { View } from 'react-native'
 import { Icon } from 'react-native-elements'
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -19,8 +19,8 @@ import MyGamesScreen from '../screens/MyGames/MyGamesScreen'
 import LikeScreen from '../screens/Liked/LikeScreen'
 
 import PersonalArea from '../screens/Profile/PersonalArea'
-import {EditPersonalArea} from '../screens/Profile/EditPersonalArea'
-import {ChangePass} from '../screens/Profile/ChangePass'
+import { EditPersonalArea } from '../screens/Profile/EditPersonalArea'
+import { ChangePass } from '../screens/Profile/ChangePass'
 
 import FAQScreen from '../screens/Settings/FAQScreen'
 import SupportScreen from '../screens/Settings/SupportScreen'
@@ -29,143 +29,143 @@ import GamesGuideScreen from '../screens/Settings/GamesGuideScreen';
 
 
 const ShopStack = createStackNavigator(
-    {
-        ShopScreen : {
-            screen : ShopScreen, 
-            navigationOptions: { 
-                headerShown: false
-            },
-        },
-        CardGameScreen : {
-            screen : CardGameScreen,
-            navigationOptions: { 
-                headerShown: true
-            },
-        }
+  {
+    ShopScreen: {
+      screen: ShopScreen,
+      navigationOptions: {
+        headerShown: false
+      },
     },
+    CardGameScreen: {
+      screen: CardGameScreen,
+      navigationOptions: {
+        headerShown: true
+      },
+    }
+  },
 )
 
 const SettingsStack = createStackNavigator(
-    {
-        FAQScreen : {
-            screen : FAQScreen, 
-            navigationOptions: { 
-                headerShown: false
-            },
-        },
-        SupportScreen : {
-            screen : SupportScreen,
-            navigationOptions: { 
-                headerShown: true
-            },
-        },
-        SettingsScreen : {
-            screen : SettingsScreen,
-            navigationOptions: { 
-                headerShown: true
-            },
-        },
-        GamesGuideScreen : {
-            screen : GamesGuideScreen,
-            navigationOptions: { 
-                headerShown: true
-            },
-        }
+  {
+    FAQScreen: {
+      screen: FAQScreen,
+      navigationOptions: {
+        headerShown: false
+      },
+    },
+    SupportScreen: {
+      screen: SupportScreen,
+      navigationOptions: {
+        headerShown: true
+      },
+    },
+    SettingsScreen: {
+      screen: SettingsScreen,
+      navigationOptions: {
+        headerShown: true
+      },
+    },
+    GamesGuideScreen: {
+      screen: GamesGuideScreen,
+      navigationOptions: {
+        headerShown: true
+      },
     }
+  }
 )
 
 const MyGames = createStackNavigator(
-    {
-        MyGamesScreen : {
-            screen : MyGamesScreen, 
-            navigationOptions: { 
-                headerShown: false
-            },
-        },
-        LikeScreen : {
-            screen : LikeScreen,
-            navigationOptions: { 
-                headerShown: true
-            },
-        }
+  {
+    MyGamesScreen: {
+      screen: MyGamesScreen,
+      navigationOptions: {
+        headerShown: false
+      },
     },
+    LikeScreen: {
+      screen: LikeScreen,
+      navigationOptions: {
+        headerShown: true
+      },
+    }
+  },
 )
 
 const ShopCardStack = createStackNavigator(
-    {
-        BusketScreen : {
-            screen : BusketScreen, 
-            navigationOptions: { 
-                headerShown: false
-            },
-        },
+  {
+    BusketScreen: {
+      screen: BusketScreen,
+      navigationOptions: {
+        headerShown: false
+      },
     },
+  },
 )
 
 const Auth = createStackNavigator(
-{
-    StartedScreen : {
-        screen : StartedScreen, 
-        navigationOptions: { 
-            headerShown: false
-        },
+  {
+    StartedScreen: {
+      screen: StartedScreen,
+      navigationOptions: {
+        headerShown: false
+      },
     },
-    AuthScreen : {
-        screen : AuthScreen,
-        navigationOptions: { 
-            headerShown: true
-        },
+    AuthScreen: {
+      screen: AuthScreen,
+      navigationOptions: {
+        headerShown: true
+      },
     },
-    RecoverScreeen : {
-        screen : RecoverScreeen,
-        navigationOptions: { 
-            headerShown: true
-        },
+    RecoverScreeen: {
+      screen: RecoverScreeen,
+      navigationOptions: {
+        headerShown: true
+      },
     },
-    RegistrationScreeen : {
-        screen : RegistrationScreeen,
-        navigationOptions: { 
-            headerShown: true
-        },
+    RegistrationScreeen: {
+      screen: RegistrationScreeen,
+      navigationOptions: {
+        headerShown: true
+      },
     }
-},
-{
+  },
+  {
     initialRouteName: 'StartedScreen',
-}
+  }
 )
 
 const Profile = createStackNavigator({
-    PersonalArea : {
-      screen : PersonalArea, 
-      navigationOptions: { 
-        headerShown: true,
-        title  : 'Аккаунт '
-      },
+  PersonalArea: {
+    screen: PersonalArea,
+    navigationOptions: {
+      headerShown: true,
+      title: 'Аккаунт '
     },
-    EditPersonalArea : {
-      screen : EditPersonalArea,
-      navigationOptions: { 
-        headerShown: true
-      },
+  },
+  EditPersonalArea: {
+    screen: EditPersonalArea,
+    navigationOptions: {
+      headerShown: true
     },
-    ChangePass : { 
-      screen : ChangePass,
-      navigationOptions: { 
-        headerShown: true
-      },
+  },
+  ChangePass: {
+    screen: ChangePass,
+    navigationOptions: {
+      headerShown: true
     },
-    ShopCardStack : ShopCardStack
+  },
+  ShopCardStack: ShopCardStack
 })
 
 
 
 export const Navigation = createAppContainer(createSwitchNavigator({
-    Loading: Auth,
-    Profile: Profile,
-    Shop : ShopStack,
-    MyGames : MyGames,
-    SettingsStack : SettingsStack
-  }, 
+  Loading: Auth,
+  Profile: Profile,
+  Shop: ShopStack,
+  MyGames: MyGames,
+  SettingsStack: SettingsStack
+},
   {
     initialRouteName: 'Loading',
   }
