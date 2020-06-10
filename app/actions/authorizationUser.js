@@ -13,7 +13,8 @@ export function authorizationSuccess(data) {
 
 export default function authorizationUser(email, password) {
   return async (dispatch) => {
-    let auth = await api.login({ email: "pandos1998@gmail.com", password: "lebron123" })
+    let auth = await api.userAuthorize({ email: "pandos1998@gmail.com", password: "lebron123" })
+    console.warn(auth)
     // fetch('https://api.base.mozgo.com/players', {
     //     method: 'POST',
     //     headers: {
