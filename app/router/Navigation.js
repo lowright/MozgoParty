@@ -26,19 +26,19 @@ import FAQScreen from '../screens/Settings/FAQScreen'
 import SupportScreen from '../screens/Settings/SupportScreen'
 import SettingsScreen from '../screens/Settings/SettingsScreen'
 import GamesGuideScreen from '../screens/Settings/GamesGuideScreen';
-
+import GameProgressScreen from '../screens/Settings/GameProgressScreen';
 
 const ShopStack = createStackNavigator(
     {
         ShopScreen : {
-            screen : ShopScreen, 
-            navigationOptions: { 
+            screen : ShopScreen,
+            navigationOptions: {
                 headerShown: false
             },
         },
         CardGameScreen : {
             screen : CardGameScreen,
-            navigationOptions: { 
+            navigationOptions: {
                 headerShown: true
             },
         }
@@ -48,26 +48,32 @@ const ShopStack = createStackNavigator(
 const SettingsStack = createStackNavigator(
     {
         FAQScreen : {
-            screen : FAQScreen, 
-            navigationOptions: { 
+            screen : FAQScreen,
+            navigationOptions: {
                 headerShown: false
             },
         },
         SupportScreen : {
             screen : SupportScreen,
-            navigationOptions: { 
+            navigationOptions: {
                 headerShown: true
             },
         },
         SettingsScreen : {
             screen : SettingsScreen,
-            navigationOptions: { 
+            navigationOptions: {
                 headerShown: true
             },
         },
         GamesGuideScreen : {
             screen : GamesGuideScreen,
-            navigationOptions: { 
+            navigationOptions: {
+                headerShown: true
+            },
+        },
+        GameProgressScreen : {
+            screen : GameProgressScreen,
+            navigationOptions: {
                 headerShown: true
             },
         }
@@ -77,14 +83,14 @@ const SettingsStack = createStackNavigator(
 const MyGames = createStackNavigator(
     {
         MyGamesScreen : {
-            screen : MyGamesScreen, 
-            navigationOptions: { 
+            screen : MyGamesScreen,
+            navigationOptions: {
                 headerShown: false
             },
         },
         LikeScreen : {
             screen : LikeScreen,
-            navigationOptions: { 
+            navigationOptions: {
                 headerShown: true
             },
         }
@@ -94,8 +100,8 @@ const MyGames = createStackNavigator(
 const ShopCardStack = createStackNavigator(
     {
         BusketScreen : {
-            screen : BusketScreen, 
-            navigationOptions: { 
+            screen : BusketScreen,
+            navigationOptions: {
                 headerShown: false
             },
         },
@@ -105,26 +111,26 @@ const ShopCardStack = createStackNavigator(
 const Auth = createStackNavigator(
 {
     StartedScreen : {
-        screen : StartedScreen, 
-        navigationOptions: { 
+        screen : StartedScreen,
+        navigationOptions: {
             headerShown: false
         },
     },
     AuthScreen : {
         screen : AuthScreen,
-        navigationOptions: { 
+        navigationOptions: {
             headerShown: true
         },
     },
     RecoverScreeen : {
         screen : RecoverScreeen,
-        navigationOptions: { 
+        navigationOptions: {
             headerShown: true
         },
     },
     RegistrationScreeen : {
         screen : RegistrationScreeen,
-        navigationOptions: { 
+        navigationOptions: {
             headerShown: true
         },
     }
@@ -136,21 +142,21 @@ const Auth = createStackNavigator(
 
 const Profile = createStackNavigator({
     PersonalArea : {
-      screen : PersonalArea, 
-      navigationOptions: { 
+      screen : PersonalArea,
+      navigationOptions: {
         headerShown: true,
         title  : 'Аккаунт '
       },
     },
     EditPersonalArea : {
       screen : EditPersonalArea,
-      navigationOptions: { 
+      navigationOptions: {
         headerShown: true
       },
     },
-    ChangePass : { 
+    ChangePass : {
       screen : ChangePass,
-      navigationOptions: { 
+      navigationOptions: {
         headerShown: true
       },
     },
@@ -165,7 +171,7 @@ export const Navigation = createAppContainer(createSwitchNavigator({
     Shop : ShopStack,
     MyGames : MyGames,
     SettingsStack : SettingsStack
-  }, 
+  },
   {
     initialRouteName: 'Loading',
   }

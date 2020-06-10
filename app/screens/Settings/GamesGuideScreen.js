@@ -39,11 +39,17 @@ class GamesGuideScreen extends React.Component {
 из приложения в момент игры считается потраченным запуском. Пауза игры без выхода из приложения не считается отдельно потраченным запуском. После третьего запуска игра становится недоступна.</Text>
                 </View>
                 <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('Profile')}
-                    style={{marginTop : 30}}
-                >
+                        onPress={() => this.props.navigation.navigate('Profile')}
+                        style={{marginTop : 30}}
+                    >
                     <Text>Profile</Text>
                 </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate('GameProgressScreen')}
+                        style={{marginTop : 30}}
+                    >
+                        <Text>GameProgressScreen</Text>
+                    </TouchableOpacity>
             </View>
         )
 

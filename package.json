@@ -27,6 +27,7 @@
     "react-native-reanimated": "^1.9.0",
     "react-native-safe-area-context": "^3.0.2",
     "react-native-screens": "^2.2.0",
+    "react-native-tab-view": "^2.14.4",
     "react-native-ui-lib": "^5.8.1",
     "react-native-unimodules": "~0.9.0",
     "react-native-vertical-tab-view": "^0.1.3",
