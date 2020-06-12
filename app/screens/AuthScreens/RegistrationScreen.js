@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { CheckBox } from 'react-native-elements'
 import {connect} from 'react-redux'
-import registrationUser from '../../actions/registrationUser'
+import registrationUser, {registrationSuccess} from '../../actions/registrationUser'
 
 
 class RegistrationScreeen extends Component{
@@ -20,13 +20,40 @@ class RegistrationScreeen extends Component{
         }
     }
 
+    registration = async (name, email, password, password_confirmation, phone)=>{
+        fetch('https://api.base.mozgo.com/players', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept' : 'application/json'
+            },
+            body: JSON.stringify({
+                'name' : name,
+                'email' : email,
+                'password' : password,
+                'password_confirmation' : password_confirmation,
+                'phone' : phone
+            })
+        })
+        .then(res => {
+            if(res.status !== 200) {
+                alert(res.statusText)
+            }
+            return res
+        })
+        .then( res => res.json() )
+        .then( data => console.log(data) )
+        .then( () => this.props.navigation.navigate('AuthScreen') )
+        .catch( e => console.log( 'Error' + e ) )
+}
+
     render() {
 
         const { registrationUser } = this.props
         const { name, email, password, password_confirmation, phone } = this.state
 
         return (
-        
+
             <View style={styeles.container}>
 
                 <View style={styeles.form}>
@@ -52,7 +79,7 @@ class RegistrationScreeen extends Component{
                         style={styeles.inputForm}
                         onChangeText={password => this.setState({password})}
                         secureTextEntry={true}
-                        placeholder='Пароль' 
+                        placeholder='Пароль'
                         value={this.state.password}
                     />
                     <TextInput
@@ -73,7 +100,7 @@ class RegistrationScreeen extends Component{
 
                 <TouchableOpacity
                     style={styeles.btnAuth}
-                    onPress={() => registrationUser(name, email, password, password_confirmation, phone)}
+                    onPress={() => this.registration(name, email, password, password_confirmation, phone)}
                 >
                     <Text style={{textAlign : 'center', color : '#fff', fontSize : 14}}>
                         ЗАРЕГЕСТРИРОВАТЬСЯ
@@ -81,7 +108,7 @@ class RegistrationScreeen extends Component{
                 </TouchableOpacity>
 
             </View>
-        
+
         )
 
     }
@@ -102,9 +129,9 @@ const mapDispatchToProps = dispatch => {
         }
     }
 }
-  
+
 export default connect( mapStateToProps, mapDispatchToProps )(RegistrationScreeen)
-  
+
 
 const styeles = StyleSheet.create({
     container : {
@@ -118,13 +145,13 @@ const styeles = StyleSheet.create({
     form : {
     },
     inputForm : {
-        height: 40, 
-        borderBottomWidth: 1, 
+        height: 40,
+        borderBottomWidth: 1,
         paddingLeft: 9,
         paddingRight: 15,
         borderBottomColor: 'rgba(0, 0, 0, 0.38)',
         fontSize : 16,
-        marginBottom : 25 
+        marginBottom : 25
     },
     btnAuth : {
         marginTop : 30,

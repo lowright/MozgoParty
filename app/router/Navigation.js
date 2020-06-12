@@ -7,6 +7,7 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 
 import StartedScreen from '../screens/AuthScreens/StartedScreen'
 import AuthScreen from '../screens/AuthScreens/AuthScreen'
+import AuthLoadingScreen from '../screens/AuthScreens/AuthLoadingScreen';
 import RecoverScreeen from '../screens/AuthScreens/RecoverScreeen'
 import RegistrationScreeen from '../screens/AuthScreens/RegistrationScreen'
 
@@ -166,6 +167,7 @@ const Profile = createStackNavigator({
 
 
 export const Navigation = createAppContainer(createSwitchNavigator({
+    AuthLoading: AuthLoadingScreen,
     Loading: Auth,
     Profile: Profile,
     Shop : ShopStack,
@@ -173,7 +175,7 @@ export const Navigation = createAppContainer(createSwitchNavigator({
     SettingsStack : SettingsStack
   },
   {
-    initialRouteName: 'Loading',
+    initialRouteName: 'AuthLoading',
   }
 ));
 

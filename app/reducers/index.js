@@ -1,10 +1,9 @@
 import { combineReducers } from 'redux'
-import { registrationUser } from '../reducers/registrationUser'
+import { userData } from '../reducers/userData'
 
 const rootReducers = combineReducers({
-    registrationUser,
+    userData,
 })
 
 export default rootReducers
 
- 

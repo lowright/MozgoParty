@@ -1,7 +1,18 @@
 import React from "react";
 import {View, Image, Text, StyleSheet, TouchableOpacity} from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
+import  userDataAction from '../../actions/userDataAction'
+import {connect} from "react-redux";
 
-export default class PersonalArea extends React.Component{
+class PersonalArea extends React.Component{
+
+    constructor(props){
+        super(props)
+
+        this.state = {
+            token : null
+        }
+    }
 
     static navigationOptions = {
         drawerLabel: 'Home',
@@ -12,8 +23,27 @@ export default class PersonalArea extends React.Component{
           />
         ),
     };
-    
+
+    getToken = async () => {
+        const res = await AsyncStorage.getItem('userToken');
+        const token = res.slice(1,-1)
+        this.setState({token})
+    }
+
+    async componentDidMount() {
+        await this.getToken();
+        await this.props.userDataAction(this.state.token)
+    }
+
+    outGoing = async ( ) => {
+        await AsyncStorage.removeItem('userToken');
+        await this.props.navigation.navigate('Loading')
+    }
+
     render() {
+
+        const {name, email, phone} = this.props.user.userInfo
+
         return(
             <View style={styles.PersonalAreaWrapper}>
                 <View style={styles.PersonAvatarImage}>
@@ -29,15 +59,15 @@ export default class PersonalArea extends React.Component{
                 </View>
                 <View style={styles.PersonInfoWrapper}>
                     <Text style={styles.PersonInfoTitle}>Имя и фамилия</Text>
-                    <Text style={styles.PersonInfoDesc}>Василий Петечкин</Text>
+                    <Text style={styles.PersonInfoDesc}>{name}</Text>
                 </View>
                 <View style={styles.PersonInfoWrapper}>
                     <Text style={styles.PersonInfoTitle}>Номер телефона</Text>
-                    <Text style={styles.PersonInfoDesc}>+7 (992) 020-02-20</Text>
+                    <Text style={styles.PersonInfoDesc}>{phone}</Text>
                 </View>
                 <View style={styles.PersonInfoWrapper}>
                     <Text style={styles.PersonInfoTitle}>E-mail</Text>
-                    <Text style={styles.PersonInfoDesc}>vasyapetechkin@gmail.com</Text>
+                    <Text style={styles.PersonInfoDesc}>{email}</Text>
                 </View>
                 <View style={styles.PersonalActionButtonsWrapper}>
                     <TouchableOpacity
@@ -53,7 +83,7 @@ export default class PersonalArea extends React.Component{
                         <Text style={styles.PersonalActionButtonText}>Изменить пароль</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('Shop')}
+                        onPress={() => this.outGoing()}
                         style={styles.PersonalActionButton}
                     >
                         <Text style={styles.PersonalLogoutButtonText}>Выйти</Text>
@@ -69,6 +99,22 @@ export default class PersonalArea extends React.Component{
         )
     }
 }
+
+const mapStateToProps = state => {
+    console.log('mapStateToProps >>>>>>>>')
+    console.log(JSON.stringify(state))
+    return {
+        user : state.userData
+    }
+}
+const mapDispatchToProps = dispatch => {
+
+    return {
+        userDataAction : token => dispatch(userDataAction(token))
+    }
+}
+
+export default connect( mapStateToProps,mapDispatchToProps )(PersonalArea)
 
 
 const styles = StyleSheet.create({

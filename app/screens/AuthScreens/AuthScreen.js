@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux'
-import authorizationUser from '../../actions/authorizationUser'
+import AsyncStorage from '@react-native-community/async-storage';
+import userDataAction from '../../actions/userDataAction'
 
 
 class AuthScreen extends Component{
@@ -15,10 +16,40 @@ class AuthScreen extends Component{
         }
     }
 
-  render() {
+    auth = async () => {
 
+        const { email , password} = this.state
+        const settings = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'email' : email,
+                'password' : password
+            })
+        };
+        try {
+            const data = await fetch(`https://api.base.mozgo.com/login`, settings);
+            const json = await data.json()
+            console.log('Resp >>>>>>>>>>>' + JSON.stringify(json))
+
+            if(JSON.stringify(json.access_token)){
+                await AsyncStorage.setItem('userToken', JSON.stringify(json.access_token));
+                await this.props.navigation.navigate('Profile');
+            } else{
+                alert('Упс... Что-то пошло не так')
+            }
+        }
+        catch (error) { alert(error) }
+
+    };
+
+  render() {
+    const {email,password} = this.state;
     return (
-      
+
       <View style={styeles.container}>
             <Text>
                 Для авторизации вы можете использовать логин
@@ -39,7 +70,7 @@ class AuthScreen extends Component{
             </View>
 
             <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Profile')}
+                onPress={() => this.auth(email, password)}
                 style={styeles.btnAuth}
             >
                 <Text style={{textAlign : 'center', color : '#fff', fontSize : 14}}>
@@ -51,30 +82,30 @@ class AuthScreen extends Component{
             <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('RecoverScreeen')}
             >
-                <Text 
+                <Text
                     style={
                         {
-                            textAlign : 'center', 
+                            textAlign : 'center',
                             marginVertical : 24,
                             fontSize : 12
                         }
                     }>Забыли пароль?</Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('RegistrationScreeen')}
             >
-                <Text 
+                <Text
                     style={
                         {
-                            textAlign : 'center', 
+                            textAlign : 'center',
                             fontSize : 12
                         }
                     }>Нет аккаунта? Зарегистрируйтесь.</Text>
             </TouchableOpacity>
 
       </View>
-     
+
     )
 
   }
@@ -85,17 +116,17 @@ const mapStateToProps = state => {
     console.log('mapStateToProps >>>>>>>>')
     console.log(JSON.stringify(state))
     return {
-        
+
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
-        authorizationUser : (email, password) => dispatch(authorizationUser(email, password))
+        authorizationUser : (email, password) => dispatch(userDataAction(email, password))
     }
 }
-  
+
 export default connect( mapStateToProps,mapDispatchToProps )(AuthScreen)
-  
+
 
 
 const styeles = StyleSheet.create({
@@ -111,13 +142,13 @@ const styeles = StyleSheet.create({
         marginVertical : 30
     },
     inputForm : {
-        height: 40, 
-        borderBottomWidth: 1, 
+        height: 40,
+        borderBottomWidth: 1,
         paddingLeft: 9,
         paddingRight: 15,
         borderBottomColor: 'rgba(0, 0, 0, 0.38)',
         fontSize : 16,
-        marginBottom : 25 
+        marginBottom : 25
     },
     btnAuth : {
         backgroundColor : '#0B2A5B',
