@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { View, Image, ScrollView, Text, StyleSheet, ProgressBarAndroid, TouchableOpacity } from 'react-native'
 
-export const GamesListItem = ({press}) => {
+export const GamesListItem = ({press, price, name, rating}) => {
     return(
         <TouchableOpacity
             onPress={() => press()}
@@ -100,5 +100,6 @@ const styles = StyleSheet.create({
         color: '#979797',
         fontSize: 10,
         lineHeight: 12
-    }
+    },
+    
 })

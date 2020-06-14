@@ -1,8 +1,10 @@
 import React from "react";
-import {View, Image, Text, StyleSheet, TouchableOpacity} from "react-native";
+import {View, Image, Text, StyleSheet, TouchableOpacity, ActivityIndicator} from "react-native";
 import AsyncStorage from '@react-native-community/async-storage';
 import  userDataAction from '../../actions/userDataAction'
 import {connect} from "react-redux";
+import {Header} from 'react-native-elements'
+import Icon from '../../components/Icon'
 
 class PersonalArea extends React.Component{
 
@@ -41,10 +43,30 @@ class PersonalArea extends React.Component{
     }
 
     render() {
-
         const {name, email, phone} = this.props.user.userInfo
+        let {loading} = this.props.user
 
+
+        if(!loading == true) {
+            return (
+                <View style={styles.preloader}>
+                    <ActivityIndicator  color={'#000'} />
+                </View>
+            )
+        } 
+        
         return(
+            <>
+            <Header
+                leftComponent={
+                    <Icon
+                        src={require('../../src/shape.png')}
+                        press={() => this.props.navigation.openDrawer()}
+                    />
+                }
+                centerComponent={{ text: 'Аккаунт', style: { color: '#000', fontSize : 18 } }}
+                containerStyle={styles.header}
+            />
             <View style={styles.PersonalAreaWrapper}>
                 <View style={styles.PersonAvatarImage}>
                     <Image
@@ -63,7 +85,7 @@ class PersonalArea extends React.Component{
                 </View>
                 <View style={styles.PersonInfoWrapper}>
                     <Text style={styles.PersonInfoTitle}>Номер телефона</Text>
-                    <Text style={styles.PersonInfoDesc}>{phone}</Text>
+                    <Text style={styles.PersonInfoDesc}>{!phone ? <Text>...</Text> : phone}</Text>
                 </View>
                 <View style={styles.PersonInfoWrapper}>
                     <Text style={styles.PersonInfoTitle}>E-mail</Text>
@@ -88,15 +110,11 @@ class PersonalArea extends React.Component{
                     >
                         <Text style={styles.PersonalLogoutButtonText}>Выйти</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('SettingsStack')}
-                        style={styles.PersonalActionButton}
-                    >
-                        <Text style={styles.PersonalLogoutButtonText}>Настройки TEST</Text>
-                    </TouchableOpacity>
-                </View>
+                 </View>
             </View>
+            </>
         )
+        
     }
 }
 
@@ -157,5 +175,18 @@ const styles = StyleSheet.create({
         color: '#ED1C24',
         textAlign: 'center',
         textTransform: 'uppercase'
-    }
+    },
+    header:{
+        backgroundColor: '#fff',
+        borderBottomWidth : 0.4,
+        paddingBottom : 0,
+        borderBottomColor : '#000',
+        paddingTop : 0,
+        height : 60
+    },
+    preloader : {
+        flex : 1,
+        justifyContent : 'center',
+        alignItems : 'center'
+    },
 })

@@ -2,6 +2,10 @@ import React, {Component} from 'react';
 import { StyleSheet, Text, View, FlatList, Image, SafeAreaView, TouchableOpacity } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import {Button, Dialog, Colors, PanningProvider, Constants} from 'react-native-ui-lib';
+import {Header} from 'react-native-elements'
+import Icon from '../../components/Icon'
+import { AsyncStorage } from 'react-native';
+
 
 import { CardItem } from '../../components/CardItem'
 
@@ -18,52 +22,7 @@ export default class ShopScreen extends Component{
         };
 
         this.state = {
-            data : [
-                {
-                    id : '1',
-                    raiting : '4,5',
-                    title : 'Hallowen',
-                    url : 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/halloween-trivia-jack-o-lanterns-1531163183.jpg',
-                    price : '304'
-                },
-                {
-                    id : '2q',
-                    raiting : '2,5',
-                    title : 'DoTa 2',
-                    url : 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/halloween-trivia-jack-o-lanterns-1531163183.jpg',
-                    price : '304'
-                },
-                {
-                    id : '3', 
-                    raiting : '5.0',
-                    title : 'Test Game',
-                    url : 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/halloween-trivia-jack-o-lanterns-1531163183.jpg',
-                    price : '304'
-                },
-                {
-                    id : 'rd',
-                    raiting : '5.0',
-                    title : 'Test Game',
-                    url : 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/halloween-trivia-jack-o-lanterns-1531163183.jpg',
-                    price : '304'
-                },
-                {
-                    id : 'rw',
-                    raiting : '5.0',
-                    title : 'Test Game',
-                    url : 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/halloween-trivia-jack-o-lanterns-1531163183.jpg',
-                    price : '304'
-                },
-                {
-                    id : 'rw',
-                    raiting : '5.0',
-                    title : 'Test Game',
-                    url : 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/halloween-trivia-jack-o-lanterns-1531163183.jpg',
-                    price : '304'
-                },
-                
-                
-            ],
+            data : [],
             panDirection: PanningProvider.Directions.UP,
             position: 'bottom',
             scroll: this.SCROLL_TYPE.NONE,
@@ -83,14 +42,18 @@ export default class ShopScreen extends Component{
 
     renderContent = () => {
         return (
+            <>
+            
             <View style={styles.modalWrapper}>
+
+                
 
                 <Text style={{color : '#333333', fontSize : 14, fontWeight : 'bold'}}>Какие игры показать сначала?</Text>
 
                 <CheckBox
                     left
                     iconRight
-                    title={<Text style={styles.sort}>Корзина </Text>}
+                    title={<Text style={styles.sort}>С высоким рейтингом </Text>}
                     checkedIcon={<Image source={require('../../src/check.png')} />}
                     uncheckedIcon={<Image source={require('../../src/check.png')} />}
                     checked={this.state.checked}
@@ -99,7 +62,7 @@ export default class ShopScreen extends Component{
                 <CheckBox
                     left
                     iconRight
-                    title={<Text style={styles.sort}>Мои Игры</Text>}
+                    title={<Text style={styles.sort}>Новые</Text>}
                     checkedIcon={<Image source={require('../../src/sort.png')} />}
                     uncheckedIcon={<Image source={require('../../src/check.png')} />}
                     checked={this.state.checked}
@@ -125,6 +88,7 @@ export default class ShopScreen extends Component{
 
 
             </View>
+            </>
         )
     }
 
@@ -171,11 +135,45 @@ export default class ShopScreen extends Component{
         );
     }
 
+    getGamesData = async token => {
+        try {
+            const response = await fetch('https://api.party.mozgo.com/api/games', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept' : 'application/json',
+                'Authorization': 'Bearer ' + token
+              }
+            });
+            const json = await response.json();
+            this.setState({data : json})
+            console.log('Успех:', JSON.stringify(json));
+          } catch (error) {
+            console.error('Ошибка:', error);
+        }
+    }
+    
+    async componentDidMount(){
+        const token = await AsyncStorage.getItem('userToken');
+        await this.getGamesData(token)
+    }
+
     render() {
 
         return (
         
             <SafeAreaView style={styles.container}>
+
+                <Header
+                    leftComponent={
+                        <Icon
+                            src={require('../../src/shape.png')}
+                            press={() => this.props.navigation.openDrawer()}
+                        />
+                    }
+                    centerComponent={{ text: 'MozgoParty', style: { color: '#000', fontSize : 18 } }}
+                    containerStyle={styles.header}
+                />
 
                 <CheckBox
                     right
@@ -193,11 +191,18 @@ export default class ShopScreen extends Component{
                         numColumns={2}
                         renderItem={({ item }) => 
                             <CardItem
-                                raiting={item.raiting}
-                                title={item.title}
-                                url={item.url}
-                                price={item.price}
-                                press={() => this.props.navigation.navigate('CardGameScreen')}
+                                raiting={item.rating}
+                                title={item.party.name}
+                                url={item.media.avatar}
+                                like={true}
+                                price={item.party.price}
+                                press={() => this.props.navigation.navigate('CardGameScreen', {
+                                    title : item.party.name,
+                                    image : item.media.avatar,
+                                    description : item.description,
+                                    age_rating : item.age_rating,
+                                    price : item.party.price
+                                })}
                             />
                         }
                         keyExtractor={item => item.id}
@@ -285,5 +290,13 @@ const styles = StyleSheet.create({
     buttonTitle: {
         marginLeft: 10,
         fontSize: 16
-    }
+    },
+    header:{
+        backgroundColor: '#fff',
+        borderBottomWidth : 0.4,
+        paddingBottom : 0,
+        borderBottomColor : '#000',
+        paddingTop : 0,
+        height : 60
+    },
 })

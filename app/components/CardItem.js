@@ -1,14 +1,33 @@
 import React from 'react'
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
-export const CardItem = ({raiting,title,url,price,press}) => {
+export const CardItem = ({raiting,title,url,price,press, like}) => {
 
     return (
         <View style={styles.cardItemWrapper}>
             <View style={styles.cardImageWrapper}>
+                
                 <TouchableOpacity
                     onPress={() => press()}
                 >
+                    <>
+                    <View>
+                    <TouchableOpacity
+                        onPress={() => press()}
+                    >
+                        <Image
+                            source = {require('../src/like.png')}
+                            style={{
+                                width : 32,
+                                height : 32,
+                                top : 0,
+                                right : 0,
+                                position : 'absolute',
+                                zIndex : 22
+                            }}
+                        />
+                    </TouchableOpacity>
+                    </View>
                     <Image
                         source = {{uri: `${url}`}}
                         style={{
@@ -19,7 +38,10 @@ export const CardItem = ({raiting,title,url,price,press}) => {
                             borderTopRightRadius: 4,
                         }}
                     />
+                    </>
                 </TouchableOpacity>
+                
+                
             </View>
             <View style={styles.cardItemDesc}>
                 <View style={styles.cardItemRaitingWrapper}>

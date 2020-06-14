@@ -4,7 +4,37 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'reac
 
 export default class CardGameScreen  extends Component{
 
+    constructor(){
+        super()
+
+        this.state = {
+            addGames : false
+        }
+    } 
+
+
+
+    
+    renderFootBtn(){
+        if(this.state.addGames === false) {
+            return null
+        }
+        return(
+            <TouchableOpacity
+            style={styles.btnAuth2}
+            onPress={() => this.props.navigation.navigate('BusketScreen')}
+        >
+            <Text style={{textAlign : 'left', color : '#fff', fontSize : 14}}>
+                КОРЗИНА
+            </Text>
+        </TouchableOpacity>
+        )
+    }
   render() {
+
+    const navigationProps = this.props.navigation.state.params;
+
+    
 
     return (
       
@@ -12,20 +42,20 @@ export default class CardGameScreen  extends Component{
 
         <View style={styles.headerGames}>
             <Image
-                source={require('../../src/game.png')}
+                source={{uri : navigationProps.image}}
                 style={styles.logo}
             />
 
-            <Text style={{color : "#333333", fontSize : 18, fontWeight : 'bold'}}>Кино и Музыка. Эпоха  VHS</Text>
+        <Text style={{color : "#333333", fontSize : 18, fontWeight : 'bold'}}>{navigationProps.title}</Text>
         </View>
 
         <View style={styles.aboutGame}>
 
-            <Text style={{color : "#BD006C", fontSize : 12, fontWeight : 'bold', marginRight : 24}}>300 ₽</Text>
+            <Text style={{color : "#BD006C", fontSize : 12, fontWeight : 'bold', marginRight : 24}}>{`${navigationProps.price} ₽`}</Text>
 
             <Text style={{color : "#333", fontSize : 12, fontWeight : 'bold', marginRight : 24}}>122 Мб</Text>
 
-            <Text style={{color : "#333", fontSize : 12, fontWeight : 'bold', marginRight : 24}}>12+</Text>
+            <Text style={{color : "#333", fontSize : 12, fontWeight : 'bold', marginRight : 24}}>{navigationProps.age_rating}</Text>
 
             <TouchableOpacity
                 style={{flexDirection : 'row', alignItems : 'center'}}
@@ -47,6 +77,7 @@ export default class CardGameScreen  extends Component{
 
         <TouchableOpacity
             style={styles.btnAuth}
+            onPress={() => this.setState({addGames : true})}
         >
             <Text style={{textAlign : 'center', color : '#fff', fontSize : 14}}>
                 ДОБАВИТЬ В КОРЗИНУ
@@ -56,8 +87,7 @@ export default class CardGameScreen  extends Component{
         <View style={styles.description}>
             <Text style={{fontSize : 14, fontWeight : 'bold', marginBottom : 10}}>Описание</Text>
             <Text style={{fontSize : 12, fontWeight : '200', marginBottom : 10}}>
-                Самое культовое и легендарное из нашего «кассетного» прошлого! 
-                От Терминатора и Queen до Брата и Руки Вверх.
+                {navigationProps.description}
             </Text>
             <TouchableOpacity
                 style={styles.categor}
@@ -68,7 +98,7 @@ export default class CardGameScreen  extends Component{
             </TouchableOpacity>
         </View>
 
-
+        {this.renderFootBtn()}
       </View>
      
     )
@@ -80,7 +110,8 @@ export default class CardGameScreen  extends Component{
 const styles = StyleSheet.create({
     container : {
         paddingHorizontal : 16,
-        paddingVertical : 16
+        paddingVertical : 16,
+        height : '100%'
     },
     logo: {
         width : 94,
@@ -113,5 +144,15 @@ const styles = StyleSheet.create({
     },
     description : {
         marginVertical : 30
+    },
+    btnAuth2 :{
+        backgroundColor : '#0B2A5B',
+        padding : 16,
+        borderRadius : 5,
+        textAlign : 'left',
+        position : 'absolute',
+        left : 18,
+         right : 18,
+        bottom : 20
     }
 })

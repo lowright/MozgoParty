@@ -145,8 +145,7 @@ const Profile = createStackNavigator({
     PersonalArea : {
       screen : PersonalArea,
       navigationOptions: {
-        headerShown: true,
-        title  : 'Аккаунт '
+        headerShown: false,
       },
     },
     EditPersonalArea : {
@@ -165,14 +164,18 @@ const Profile = createStackNavigator({
 })
 
 
-
-export const Navigation = createAppContainer(createSwitchNavigator({
-    AuthLoading: AuthLoadingScreen,
-    Loading: Auth,
+const MyDrawerNavigator = createDrawerNavigator({
     Profile: Profile,
     Shop : ShopStack,
     MyGames : MyGames,
     SettingsStack : SettingsStack
+});
+
+
+export const Navigation = createAppContainer(createSwitchNavigator({
+    AuthLoading: AuthLoadingScreen,
+    Loading: Auth,
+    MyDrawerNavigator : MyDrawerNavigator
   },
   {
     initialRouteName: 'AuthLoading',

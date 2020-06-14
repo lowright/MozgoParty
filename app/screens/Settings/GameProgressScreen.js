@@ -1,6 +1,6 @@
 import  React from 'react';
 import {View, StyleSheet, Dimensions, TouchableOpacity, ScrollView, Text} from 'react-native';
-import { TabView, SceneMap } from 'react-native-tab-view';
+import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 
 const FirstRoute = () => (
     <View style={styles.container}>
@@ -233,12 +233,22 @@ export default function GameProgressScreen() {
         third: ThirdRoute
     });
 
+    const renderTabBar = props => (
+        <TabBar
+          {...props}
+          indicatorStyle={{ backgroundColor: 'white'}}
+          style={styles.TabBarStyle}
+        />
+      );
+
     return (
         <TabView
             navigationState={{ index, routes }}
+            renderTabBar={renderTabBar}
             renderScene={renderScene}
             onIndexChange={setIndex}
             initialLayout={initialLayout}
+            style={{backgroundColor:'white'}}
         />
     );
 }
@@ -291,5 +301,9 @@ const styles = StyleSheet.create({
     },
     SingleRulesWrapper : {
         marginBottom: 24
+    },
+    TabBarStyle : {
+        color: '#000',
+        backgroundColor: 'white'
     }
 });
