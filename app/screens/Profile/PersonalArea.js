@@ -43,11 +43,9 @@ class PersonalArea extends React.Component{
     }
 
     render() {
-        const {name, email, phone} = this.props.user.userInfo
-        let {loading} = this.props.user
+        const loading = this.props.user.loading
 
-
-        if(!loading == true) {
+        if(loading === false) {
             return (
                 <View style={styles.preloader}>
                     <ActivityIndicator  color={'#000'} />
@@ -55,65 +53,67 @@ class PersonalArea extends React.Component{
             )
         } 
         
-        return(
-            <>
-            <Header
-                leftComponent={
-                    <Icon
-                        src={require('../../src/shape.png')}
-                        press={() => this.props.navigation.openDrawer()}
-                    />
-                }
-                centerComponent={{ text: 'Аккаунт', style: { color: '#000', fontSize : 18 } }}
-                containerStyle={styles.header}
-            />
-            <View style={styles.PersonalAreaWrapper}>
-                <View style={styles.PersonAvatarImage}>
-                    <Image
-                        source = {require('../../src/PersonAvatar.png')}
-                        style={{
-                            width: 80,
-                            height: 80,
-                            borderRadius: 40,
-                            marginBottom: 29
-                        }}
-                    />
+        else {
+            return(
+                <>
+                <Header
+                    leftComponent={
+                        <Icon
+                            src={require('../../src/shape.png')}
+                            press={() => this.props.navigation.openDrawer()}
+                        />
+                    }
+                    centerComponent={{ text: 'Аккаунт', style: { color: '#000', fontSize : 18 } }}
+                    containerStyle={styles.header}
+                />
+                <View style={styles.PersonalAreaWrapper}>
+                    <View style={styles.PersonAvatarImage}>
+                        <Image
+                            source = {require('../../src/PersonAvatar.png')}
+                            style={{
+                                width: 80,
+                                height: 80,
+                                borderRadius: 40,
+                                marginBottom: 29
+                            }}
+                        />
+                    </View>
+                    <View style={styles.PersonInfoWrapper}>
+                        <Text style={styles.PersonInfoTitle}>Имя и фамилия</Text>
+                        <Text style={styles.PersonInfoDesc}>{this.props.user.userInfo.name}</Text>
+                    </View>
+                    <View style={styles.PersonInfoWrapper}>
+                        <Text style={styles.PersonInfoTitle}>Номер телефона</Text>
+                        <Text style={styles.PersonInfoDesc}>{!this.props.user.userInfo.phone ? <Text>...</Text> : this.props.user.userInfo.phone}</Text>
+                    </View>
+                    <View style={styles.PersonInfoWrapper}>
+                        <Text style={styles.PersonInfoTitle}>E-mail</Text>
+                        <Text style={styles.PersonInfoDesc}>{this.props.user.userInfo.email}</Text>
+                    </View>
+                    <View style={styles.PersonalActionButtonsWrapper}>
+                        <TouchableOpacity
+                            onPress={() => this.props.navigation.navigate('EditPersonalArea')}
+                            style={styles.PersonalActionButton}
+                        >
+                            <Text style={styles.PersonalActionButtonText}>Изменить данные</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => this.props.navigation.navigate('ChangePass')}
+                            style={styles.PersonalActionButton}
+                        >
+                            <Text style={styles.PersonalActionButtonText}>Изменить пароль</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => this.outGoing()}
+                            style={styles.PersonalActionButton}
+                        >
+                            <Text style={styles.PersonalLogoutButtonText}>Выйти</Text>
+                        </TouchableOpacity>
+                     </View>
                 </View>
-                <View style={styles.PersonInfoWrapper}>
-                    <Text style={styles.PersonInfoTitle}>Имя и фамилия</Text>
-                    <Text style={styles.PersonInfoDesc}>{name}</Text>
-                </View>
-                <View style={styles.PersonInfoWrapper}>
-                    <Text style={styles.PersonInfoTitle}>Номер телефона</Text>
-                    <Text style={styles.PersonInfoDesc}>{!phone ? <Text>...</Text> : phone}</Text>
-                </View>
-                <View style={styles.PersonInfoWrapper}>
-                    <Text style={styles.PersonInfoTitle}>E-mail</Text>
-                    <Text style={styles.PersonInfoDesc}>{email}</Text>
-                </View>
-                <View style={styles.PersonalActionButtonsWrapper}>
-                    <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('EditPersonalArea')}
-                        style={styles.PersonalActionButton}
-                    >
-                        <Text style={styles.PersonalActionButtonText}>Изменить данные</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('ChangePass')}
-                        style={styles.PersonalActionButton}
-                    >
-                        <Text style={styles.PersonalActionButtonText}>Изменить пароль</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => this.outGoing()}
-                        style={styles.PersonalActionButton}
-                    >
-                        <Text style={styles.PersonalLogoutButtonText}>Выйти</Text>
-                    </TouchableOpacity>
-                 </View>
-            </View>
-            </>
-        )
+                </>
+            )
+        }
         
     }
 }

@@ -30,7 +30,8 @@ export default class ShopScreen extends Component{
             isRounded: true,
             showDialog: false,
             like : false,
-            favGames : []
+            favGames : [],
+            data
         }
     }
 
@@ -48,6 +49,8 @@ export default class ShopScreen extends Component{
             console.log('remove Array' + arr)
         }
     }
+
+   
 
     
 

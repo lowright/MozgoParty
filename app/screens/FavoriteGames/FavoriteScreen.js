@@ -63,12 +63,22 @@ export default class FavoriteScreen extends Component {
         this.setState({ data: filteredData });
     }
 
+    importData = async () => {
+        try {
+          const keys = await AsyncStorage.getAllKeys();
+          const result = await AsyncStorage.multiGet(keys);
+          console.log(result)
+        } catch (error) {
+          console.error(error)
+        }
+    }
+
     render(){
         return( 
             <View style={styles.wrapper}>
                 <FlatList
                     data={this.state.data}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => Math.round(item.id, -1)}
                     renderItem={({ item }) => <Favorite 
                         title={item.party.name}
                         image={item.media.avatar}
