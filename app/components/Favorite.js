@@ -14,7 +14,7 @@ export default class Favorite extends Component {
             <View style={styles.headerGames}>
                 <TouchableOpacity 
                     style={{flexDirection: 'row'}}
-                    onPress={()=>alert('daliin loh ebanii')}
+                    onPress={()=>alert('1')}
                 >
                 <View
                     style={{width: '22.22%'}}
