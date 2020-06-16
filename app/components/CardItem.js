@@ -1,58 +1,89 @@
-import React from 'react'
+import React, { Component, useState } from 'react'
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
-export const CardItem = ({raiting,title,url,price,press, like}) => {
+export default class CardItem extends Component {
 
-    return (
-        <View style={styles.cardItemWrapper}>
-            <View style={styles.cardImageWrapper}>
-                
-                <TouchableOpacity
-                    onPress={() => press()}
-                >
-                    <>
-                    <View>
+    constructor(props){
+        super(props)
+
+        this.state = {
+            like : false
+        }
+    }
+
+    like(isLike = Boolean){
+        if(isLike === true) {
+            this.setState({like : false})
+        } else {
+            this.setState({like : true})
+        }
+    }
+
+    handleLike(event){
+        this.like(this.state.like)
+        event()
+    }
+
+    render() {
+
+        const {raiting,title,url,price, press, addFav} = this.props
+        
+        return (
+            <View style={styles.cardItemWrapper}>
+                <View style={styles.cardImageWrapper}>
+                    
                     <TouchableOpacity
                         onPress={() => press()}
                     >
-                        <Image
-                            source = {require('../src/like.png')}
-                            style={{
-                                width : 32,
-                                height : 32,
-                                top : 0,
-                                right : 0,
-                                position : 'absolute',
-                                zIndex : 22
-                            }}
-                        />
+                        <>
+                        <View style={{position : 'relative'}}>
+                            <TouchableOpacity
+                                onPress={() => this.handleLike(addFav)}
+                                style={{top : 0, 
+                                    right : 0,
+                                    position : 'absolute',
+                                    zIndex : 2,
+                                    paddingHorizontal : 7,
+                                    paddingVertical : 9
+                                }}
+                            >
+                                <Image
+                                    source = {this.state.like ? require('../src/like.png') : require('../src/defLike.png')}
+                                    style={{
+                                        width : 18,
+                                        height : 16,
+                                        
+                                    }}
+                                />
+                            </TouchableOpacity>
+                            <Image
+                                source = {{uri: `${url}`}}
+                                style={{
+                                    width : "100%",
+                                    height : 0,
+                                    paddingBottom: '100%',
+                                    borderTopLeftRadius: 4,
+                                    borderTopRightRadius: 4,
+                                }}
+                            />
+                        </View>
+    
+                        </>
                     </TouchableOpacity>
-                    </View>
-                    <Image
-                        source = {{uri: `${url}`}}
-                        style={{
-                            width : "100%",
-                            height : 0,
-                            paddingBottom: '100%',
-                            borderTopLeftRadius: 4,
-                            borderTopRightRadius: 4,
-                        }}
-                    />
-                    </>
-                </TouchableOpacity>
-                
-                
-            </View>
-            <View style={styles.cardItemDesc}>
-                <View style={styles.cardItemRaitingWrapper}>
-                    <Text style={styles.cardItemRaiting}>{raiting}</Text>
-                    <Text style={styles.cardItemStatus}>NEW!</Text>
+                    
+                    
                 </View>
-                <Text style={styles.cardItemTitle}>{title}</Text>
-                <Text style={styles.cardItemPrice}>{`${price} P`}</Text>
+                <View style={styles.cardItemDesc}>
+                    <View style={styles.cardItemRaitingWrapper}>
+                        <Text style={styles.cardItemRaiting}>{raiting}</Text>
+                        <Text style={styles.cardItemStatus}>NEW!</Text>
+                    </View>
+                    <Text style={styles.cardItemTitle}>{title}</Text>
+                    <Text style={styles.cardItemPrice}>{`${price} P`}</Text>
+                </View>
             </View>
-        </View>
-    )
+        )
+    }
 }
 
 const styles = StyleSheet.create({

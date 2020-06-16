@@ -29,6 +29,8 @@ import SettingsScreen from '../screens/Settings/SettingsScreen'
 import GamesGuideScreen from '../screens/Settings/GamesGuideScreen';
 import GameProgressScreen from '../screens/Settings/GameProgressScreen';
 
+import Favorite from '../screens/FavoriteGames/FavoriteScreen';
+
 const ShopStack = createStackNavigator(
     {
         ShopScreen : {
@@ -98,6 +100,16 @@ const MyGames = createStackNavigator(
     },
 )
 
+const Favorites = createStackNavigator(
+    {
+        Favorite : {
+            screen : Favorite,
+            navigationOptions: {
+                headerShown: true
+            },
+        },
+    },
+)
 const ShopCardStack = createStackNavigator(
     {
         BusketScreen : {
@@ -165,10 +177,11 @@ const Profile = createStackNavigator({
 
 
 const MyDrawerNavigator = createDrawerNavigator({
-    Profile: Profile,
+    Profile,
     Shop : ShopStack,
     MyGames : MyGames,
-    SettingsStack : SettingsStack
+    SettingsStack,
+    Favorites
 });
 
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
-
+import { AsyncStorage } from 'react-native';
 
 export default class CardGameScreen  extends Component{
 
@@ -8,12 +8,29 @@ export default class CardGameScreen  extends Component{
         super()
 
         this.state = {
-            addGames : false
+            addGames : false,
+            cardGames: []
         }
     } 
 
 
-
+    addItemToCard = async (id) => {
+        this.setState({addGames : true})
+        let arrGames = AsyncStorage.getItem('cardGames')
+            .then(res => JSON.parse(res))
+        console.log(arrGames)
+        // arr.push(id)
+        // this.setState({favGames : arr})
+        // console.log(this.state.favGames)
+        // if(this.state.like === false) {
+        //     await AsyncStorage.setItem('favArray', JSON.stringify(this.state.favGames))
+        //     setTimeout(() => {
+        //         console.log(AsyncStorage.getItem('favArray'))
+        //     },1000)
+        // } else {
+        //     console.log('remove Array' + arr)
+        // }
+    }
     
     renderFootBtn(){
         if(this.state.addGames === false) {
@@ -46,7 +63,7 @@ export default class CardGameScreen  extends Component{
                 style={styles.logo}
             />
 
-        <Text style={{color : "#333333", fontSize : 18, fontWeight : 'bold'}}>{navigationProps.title}</Text>
+            <Text style={{color : "#333333", fontSize : 18, fontWeight : 'bold'}}>{navigationProps.title}</Text>
         </View>
 
         <View style={styles.aboutGame}>
@@ -77,7 +94,7 @@ export default class CardGameScreen  extends Component{
 
         <TouchableOpacity
             style={styles.btnAuth}
-            onPress={() => this.setState({addGames : true})}
+            onPress={() => this.addItemToCard(navigationProps.id)}
         >
             <Text style={{textAlign : 'center', color : '#fff', fontSize : 14}}>
                 ДОБАВИТЬ В КОРЗИНУ

@@ -7,7 +7,7 @@ import Icon from '../../components/Icon'
 import { AsyncStorage } from 'react-native';
 
 
-import { CardItem } from '../../components/CardItem'
+import CardItem from '../../components/CardItem'
 
 
 export default class ShopScreen extends Component{
@@ -29,8 +29,27 @@ export default class ShopScreen extends Component{
             showHeader: true,
             isRounded: true,
             showDialog: false,
+            like : false,
+            favGames : []
         }
     }
+
+    addItemToFavorite = async (id) => {
+        let arr = this.state.favGames
+        arr.push(id)
+        this.setState({favGames : arr})
+        console.log(this.state.favGames)
+        if(this.state.like === false) {
+            await AsyncStorage.setItem('favArray', JSON.stringify(this.state.favGames))
+            setTimeout(() => {
+                console.log(AsyncStorage.getItem('favArray'))
+            },1000)
+        } else {
+            console.log('remove Array' + arr)
+        }
+    }
+
+    
 
     showDialog = () => {
         this.setState({showDialog: true});
@@ -156,6 +175,7 @@ export default class ShopScreen extends Component{
     async componentDidMount(){
         const token = await AsyncStorage.getItem('userToken');
         await this.getGamesData(token)
+        await AsyncStorage.setItem('cardGames', [1])
     }
 
     render() {
@@ -194,14 +214,16 @@ export default class ShopScreen extends Component{
                                 raiting={item.rating}
                                 title={item.party.name}
                                 url={item.media.avatar}
-                                like={true}
+                                addFav={() => this.addItemToFavorite(item.id)}
+                                like={this.state.like}
                                 price={item.party.price}
                                 press={() => this.props.navigation.navigate('CardGameScreen', {
                                     title : item.party.name,
                                     image : item.media.avatar,
                                     description : item.description,
                                     age_rating : item.age_rating,
-                                    price : item.party.price
+                                    price : item.party.price,
+                                    id : item.id
                                 })}
                             />
                         }
